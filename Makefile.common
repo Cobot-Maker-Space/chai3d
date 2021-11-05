@@ -118,5 +118,11 @@ CXXFLAGS += -I$(DHD_EXT)/include
 LDFLAGS  += -L$(DHD_LIB)
 LDLIBS   += -ldrd
 
+# Virtuose dependency
+VIRTUOSE_DIR  ?= $(TOP_DIR)/external/virtuose
+CXXFLAGS      += -I$(VIRTUOSE_DIR)/include
+LDFLAGS       += -L$(VIRTUOSE_DIR)/lib/lin-x86_64
+LDLIBS        += -l:virtuoseAPI.so
+
 # platform-specific macros
 include $(TOP_DIR)/Makefile.common.$(OS)

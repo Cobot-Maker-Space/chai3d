@@ -33,7 +33,7 @@
     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
     LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-    POSSIBILITY OF SUCH DAMAGE. 
+    POSSIBILITY OF SUCH DAMAGE.
 
     \author    <http://www.chai3d.org>
     \author    Francois Conti
@@ -70,6 +70,7 @@
 
 #if defined(C_ENABLE_CUSTOM_DEVICE_SUPPORT)
 #include "devices/CMyCustomDevice.h"
+#include "devices/CVirtuoseDevice.h"
 #endif
 //------------------------------------------------------------------------------
 
@@ -145,7 +146,7 @@ void cHapticDeviceHandler::update()
 
     // check for how many devices are available for this class of devices
     count = cDeltaDevice::getNumDevices();
- 
+
     // open all remaining devices
     for (int i=0; i<count; i++)
     {
@@ -233,6 +234,17 @@ void cHapticDeviceHandler::update()
         m_numDevices++;
     }
 
+    // check for how many devices are available for this class of devices
+    count = cVirtuoseDevice::getNumDevices();
+
+    // open all remaining devices
+    for (int i=0; i<count; i++)
+    {
+        device = cVirtuoseDevice::create(i);
+        m_devices[m_numDevices] = device;
+        m_numDevices++;
+    }
+
     #endif
 }
 
@@ -247,7 +259,7 @@ void cHapticDeviceHandler::update()
     \return __true__ if operation succeeds, __false__ otherwise.
 */
 //==============================================================================
-bool cHapticDeviceHandler::getDeviceSpecifications(cHapticDeviceInfo& a_deviceSpecifications, 
+bool cHapticDeviceHandler::getDeviceSpecifications(cHapticDeviceInfo& a_deviceSpecifications,
     unsigned int a_index)
 {
     if (a_index < m_numDevices)
